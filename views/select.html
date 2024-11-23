@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Page</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <script src="/scripts/particles.js" defer></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #0f0f0f;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+        }
+        .question {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .answers {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .answers button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .answers button:hover {
+            background-color: #ff4a4a;
+        }
+    </style>
+</head>
+<body>
+<canvas id="dynamic-background"></canvas>
+<div class="content">
+    <audio autoplay loop>
+        <source src="/music/曲肖冰-太阳.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="question">
+        <h1>你是WHO？</h1>
+        <h2>呀！小婕婕大王！</h2>
+        <p1>下面有这么几个选项，考验你的时候到了哦@Q@,mua~</p1>
+    </div>
+
+    <div class="answers">
+        <button onclick="goToConfess()">A. 你喜欢我吗？快说是，我可期待了~</button>
+        <button onclick="goToConfess()">B. 我就知道你喜欢我，对不对，超级超级喜欢我的那种！</button>
+        <button onclick="goToConfess()">C. 俺可是超级超级爱你的</button>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('dynamic-background');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+    const colors = ['#ff6b6b', '#f3f3f3', '#ffc300', '#6bf56b'];
+
+    class Particle {
+        constructor(x, y, directionX, directionY, size, color) {
+            this.x = x;
+            this.y = y;
+            this.directionX = directionX;
+            this.directionY = directionY;
+            this.size = size;
+            this.color = color;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+        update() {
+            if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                this.directionX = -this.directionX;
+            }
+            if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                this.directionY = -this.directionY;
+            }
+            this.x += this.directionX;
+            this.y += this.directionY;
+            this.draw();
+        }
+    }
+
+    function init() {
+        particlesArray = [];
+        const numberOfParticles = (canvas.width * canvas.height) / 9000;
+        for (let i = 0; i < numberOfParticles; i++) {
+            const size = Math.random() * 5 + 1;
+            const x = Math.random() * (innerWidth - size * 2) + size;
+            const y = Math.random() * (innerHeight - size * 2) + size;
+            const directionX = (Math.random() * 2) - 1;
+            const directionY = (Math.random() * 2) - 1;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(particle => particle.update());
+    }
+
+    window.addEventListener('resize', () => {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        init();
+    });
+
+    init();
+    animate();
+
+    // 点击任意选项后跳转到表白页面
+    function goToConfess() {
+        window.location.href = '/views/confess.html'; // 跳转到表白页面
+    }
+</script>
+</body>
+</html>

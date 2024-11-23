@@ -1,0 +1,100 @@
+/* main.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0f0f0f;
+    color: #fff;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff4a4a;
+}
+
+textarea {
+    width: 80%;
+    max-width: 400px;
+    height: 100px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.image-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 800px;
+    overflow: hidden;
+}
+
+.image-slider img {
+    display: none;
+    width: 100%;
+    height: auto;
+}
+
+.image-slider img:first-child {
+    display: block;
+}
+
+textarea {
+    width: 300px;
+    height: 100px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+.audio-container {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+audio {
+    width: 300px;
+}
